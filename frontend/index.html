@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <title>NaukriSetu — India's Government Jobs, Internships & Apprenticeship Portal</title>
+    <meta name="description" content="Find latest government jobs, internships, and apprenticeships in India. SSC, UPSC, Railway, Banking, Defence, PSU notifications updated daily. Accurate. Trusted." />
+    <meta name="keywords" content="sarkari naukri, government jobs india, SSC CGL, UPSC, railway jobs, banking jobs, PSU recruitment, internships, apprenticeship" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="NaukriSetu" />
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="NaukriSetu — India's Government Jobs Portal" />
+    <meta property="og:description" content="Find latest government jobs, internships & apprenticeships across India. Accurate. Updated Daily. Trusted by lakhs of job seekers." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://naukrisetu.in" />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:locale" content="en_IN" />
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="NaukriSetu — India's Government Jobs Portal" />
+    <meta name="twitter:description" content="Find latest government jobs, internships & apprenticeships across India." />
+    
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#2563EB" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Preload Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet" />
+    
+    <!-- Dark Mode FOUC Prevention — runs before React mounts -->
+    <script>
+      (function() {
+        try {
+          const stored = localStorage.getItem('naukrisetu_theme');
+          if (stored === 'dark') {
+            document.documentElement.classList.add('dark');
+          } else if (stored === 'light') {
+            document.documentElement.classList.remove('dark');
+          } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch(e) {}
+      })();
+    </script>
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://naukrisetu.in" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
