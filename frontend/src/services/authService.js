@@ -95,7 +95,7 @@ export async function signOut() {
   try {
     await firebaseSignOut(auth);
     return { success: true };
-  } catch (err) {
+  } catch {
     return { success: false, error: 'Failed to sign out. Please try again.' };
   }
 }

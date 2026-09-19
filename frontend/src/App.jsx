@@ -32,6 +32,8 @@ const Privacy = lazy(() => import('./pages/Privacy.jsx'));
 const Terms = lazy(() => import('./pages/Terms.jsx'));
 const Disclaimer = lazy(() => import('./pages/Disclaimer.jsx'));
 const Sources = lazy(() => import('./pages/Sources.jsx'));
+const Offline = lazy(() => import('./pages/Offline.jsx'));
+const ServerError = lazy(() => import('./pages/ServerError.jsx'));
 const NotFound = lazy(() => import('./pages/NotFound.jsx'));
 
 function PageLoader() {
@@ -77,6 +79,8 @@ export default function App() {
                       <Route path="/terms" element={<Terms />} />
                       <Route path="/disclaimer" element={<Disclaimer />} />
                       <Route path="/sources" element={<Sources />} />
+                      <Route path="/offline" element={<Offline />} />
+                      <Route path="/server-error" element={<ServerError />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   </Suspense>

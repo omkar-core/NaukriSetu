@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { Search, Moon, Sun, Bell, Menu, X, Bookmark, LogIn, User, ChevronDown } from 'lucide-react';
+import { Search, Moon, Sun, Bell, Menu, X, Bookmark, LogIn, User } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useBookmarks } from '../../context/BookmarkContext.jsx';
@@ -130,9 +130,8 @@ export default function Header() {
               </Link>
 
               {/* Notifications Bell */}
-              <Link to="/notifications" className="btn-ghost p-2 relative hidden sm:flex" aria-label="Notifications">
+              <Link to="/notifications" className="btn-ghost p-2 relative hidden sm:flex" aria-label="Open notifications">
                 <Bell size={18} />
-                <span className="absolute -top-0.5 -right-0.5 bg-danger text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">3</span>
               </Link>
 
               {/* Login / Avatar */}

@@ -1,0 +1,80 @@
+[
+  {
+    "id": "int_mpa0o0jw_v7hp9z",
+    "title": "Summer Research Internship at ISRO",
+    "organization": "Indian Space Research Organisation (ISRO)",
+    "tags": [
+      "URGENT"
+    ],
+    "stipendDisplay": "₹25,000/month",
+    "duration": "2 Months",
+    "eligibility": "B.Tech/BE in CSE/ECE/ME",
+    "lastDate": "2026-06-10",
+    "officialLink": "https://isro.gov.in/careers"
+  },
+  {
+    "id": "int_mpa0o0jw_ubj9wy",
+    "title": "Software Development Intern at DRDO",
+    "organization": "Defence Research & Development Organisation",
+    "tags": [
+      "NEW"
+    ],
+    "stipendDisplay": "₹30,000/month",
+    "duration": "6 Months",
+    "eligibility": "B.Tech/BE in Computer Science",
+    "lastDate": "2026-05-31",
+    "officialLink": "https://drdo.gov.in/careers"
+  },
+  {
+    "id": "int_mpa0o0jw_xs79vy",
+    "title": "Data Analytics Intern at NITI Aayog",
+    "organization": "NITI Aayog, Government of India",
+    "tags": [
+      "NEW"
+    ],
+    "stipendDisplay": "₹20,000/month",
+    "duration": "3 Months",
+    "eligibility": "Graduation in Economics/Statistics",
+    "lastDate": "2026-05-24",
+    "officialLink": "https://niti.gov.in"
+  },
+  {
+    "id": "int_mpa0o0jw_7xjc50",
+    "title": "Civil Engineering Intern at NHAI",
+    "organization": "National Highways Authority of India",
+    "tags": [
+      "GOVT"
+    ],
+    "stipendDisplay": "₹18,000/month",
+    "duration": "6 Months",
+    "eligibility": "B.Tech/BE in Civil Engineering",
+    "lastDate": "2026-06-17",
+    "officialLink": "https://nhai.gov.in"
+  },
+  {
+    "id": "int_mpa0o0jw_ao3ldj",
+    "title": "Legal Intern at Law Commission of India",
+    "organization": "Law Commission of India",
+    "tags": [
+      "NEW"
+    ],
+    "stipendDisplay": "₹15,000/month",
+    "duration": "3 Months",
+    "eligibility": "LLB/LLM",
+    "lastDate": "2026-05-26",
+    "officialLink": "https://lawcommissionofindia.nic.in"
+  },
+  {
+    "id": "int_mpa0o0jw_ve3imt",
+    "title": "Digital Marketing Intern at Ministry of Tourism",
+    "organization": "Ministry of Tourism, Government of India",
+    "tags": [
+      "GOVT"
+    ],
+    "stipendDisplay": "₹12,000/month",
+    "duration": "6 Months",
+    "eligibility": "Any Graduate with Digital Marketing skills",
+    "lastDate": "2026-06-07",
+    "officialLink": "https://tourism.gov.in"
+  }
+]

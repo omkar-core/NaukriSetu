@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Bookmark, BookmarkCheck, ExternalLink, Trash2, ArrowLeft, BriefcaseBusiness } from 'lucide-react';
+import { Bookmark, ExternalLink, Trash2, ArrowLeft, BriefcaseBusiness } from 'lucide-react';
 import { useDocumentTitle } from '../hooks/useDocumentTitle.js';
 import { useBookmarks } from '../context/BookmarkContext.jsx';
 import { formatDate, getDaysLeft } from '../utils/formatDate.js';

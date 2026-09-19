@@ -1,0 +1,29 @@
+[
+  {
+    "id": "not_mpa0o0k2_yez28w",
+    "title": "Extension of Last Date for SSC CGL 2026 Applications",
+    "organization": "Staff Selection Commission",
+    "summary": "Last date extended to 15th June 2026. Candidates can now apply online.",
+    "link": "https://ssc.gov.in",
+    "priority": "high",
+    "validUntil": "2026-06-15"
+  },
+  {
+    "id": "not_mpa0o0k2_ws1ni3",
+    "title": "UPSC Civil Services 2026 Notification Released",
+    "organization": "UPSC",
+    "summary": "UPSC has released 1200 vacancies for Civil Services Examination 2026. Apply now.",
+    "link": "https://upsc.gov.in",
+    "priority": "high",
+    "validUntil": "2026-05-30"
+  },
+  {
+    "id": "not_mpa0o0k2_7nnqx3",
+    "title": "New Vacancies Added in Ministry of Defence",
+    "organization": "Ministry of Defence",
+    "summary": "500 new posts sanctioned for various defence establishments.",
+    "link": "https://mod.gov.in",
+    "priority": "medium",
+    "validUntil": "2026-05-28"
+  }
+]

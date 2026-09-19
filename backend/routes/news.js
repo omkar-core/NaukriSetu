@@ -1,6 +1,7 @@
 import express from 'express';
 import { rateLimit } from 'express-rate-limit';
 import { getCache, setCache } from '../utils/cache.js';
+import { dataPath } from '../utils/paths.js';
 
 const router = express.Router();
 
@@ -22,6 +23,8 @@ const CATEGORY_MAP = {
   'Apprenticeship': ['Apprenticeship'],
   'State PSC': ['State PSC'],
   'Teaching': ['Teaching'],
+  'Police': ['Police'],
+  'Other Government': ['Other Government'],
 };
 
 function isWithin72Hours(dateStr) {
@@ -43,7 +46,7 @@ router.get('/live', limiter, async (req, res, next) => {
     let newsCards = [];
     try {
       const { readFileSync } = await import('fs');
-      newsCards = JSON.parse(readFileSync('./data/newsCards.json', 'utf8'));
+      newsCards = JSON.parse(readFileSync(dataPath('newsCards.json'), 'utf8'));
     } catch {
       newsCards = [];
     }

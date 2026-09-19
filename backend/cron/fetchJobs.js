@@ -1,9 +1,10 @@
 import 'dotenv/config';
 import cron from 'node-cron';
-import { writeFileSync, mkdirSync } from 'fs';
+import { writeFileSync } from 'fs';
 import { logger } from '../utils/logger.js';
 import { hashJob } from '../utils/hashFingerprint.js';
 import { invalidateCache } from '../utils/cache.js';
+import { ensureDataDir, dataPath } from '../utils/paths.js';
 import { fetchFromNewsAPI } from './sources/newsapi.js';
 import { fetchFromGNews } from './sources/gnews.js';
 import { fetchFromJSearch } from './sources/jsearch.js';
@@ -14,8 +15,8 @@ import { processNewsArticles } from './pipeline/newsProcessor.js';
 import { extractFromNewsCards } from './sources/sectionSources.js';
 import { seedInitialData } from './seedData.js';
 
-try { mkdirSync('./data', { recursive: true }); } catch {}
-seedInitialData();
+ensureDataDir();
+try { seedInitialData(); } catch (err) { logger.error('Seed failed:', err.message); }
 
 const processedHashes = new Set();
 const processedNewsHashes = new Set();
@@ -76,12 +77,12 @@ const CATEGORY_ROUTES = {
 async function readStore(name) {
   try {
     const { readFileSync } = await import('fs');
-    return JSON.parse(readFileSync(`./data/${name}`, 'utf8'));
+    return JSON.parse(readFileSync(dataPath(name), 'utf8'));
   } catch { return []; }
 }
 
 function writeStore(name, data) {
-  try { writeFileSync(`./data/${name}`, JSON.stringify(data, null, 2)); } catch (err) { logger.error(`Failed to write ${name}:`, err.message); }
+  try { writeFileSync(dataPath(name), JSON.stringify(data, null, 2)); } catch (err) { logger.error(`Failed to write ${name}:`, err.message); }
 }
 
 export async function runFetchPipeline() {
@@ -209,9 +210,15 @@ export async function runFetchPipeline() {
         if (!j.lastDate) return true;
         return new Date(j.lastDate) > now;
       });
-      const merged = [...newData, ...activeExisting].slice(0, 500);
+      const existingIds = new Set(activeExisting.map(j => j.id).filter(Boolean));
+      const trulyNew = newData.filter(j => {
+        const id = j.id || hashJob(j.title || '', j.organization || '');
+        j.id = id;
+        return !existingIds.has(id);
+      });
+      const merged = [...trulyNew, ...activeExisting].slice(0, 500);
       writeStore(filename, merged);
-      logger.cron(`Saved ${merged.length} items to ${filename}`);
+      logger.cron(`Saved ${merged.length} items (${trulyNew.length} new) to ${filename}`);
     }
   } else {
     logger.cron('No new items to process.');

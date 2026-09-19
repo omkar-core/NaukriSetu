@@ -78,7 +78,7 @@ export default function SignUp() {
         if (!value.trim()) return 'Full name is required';
         if (value.trim().length < 2) return 'Name must be at least 2 characters';
         if (value.trim().length > 50) return 'Name must be less than 50 characters';
-        if (!/^[a-zA-Z\s\-]+$/.test(value.trim())) return 'Please enter your real name using only letters';
+        if (!/^[a-zA-Z\s-]+$/.test(value.trim())) return 'Please enter your real name using only letters';
         return '';
       case 'email':
         if (!value.trim()) return 'Email is required';
@@ -159,7 +159,7 @@ export default function SignUp() {
     if (result.success) {
       setSuccess(true);
       addToast(`Welcome to NaukriSetu, ${form.fullName.split(' ')[0]}!`, 'success');
-      setTimeout(() => navigate('/', { replace: true }), 2000);
+      setTimeout(() => navigate('/dashboard', { replace: true }), 2000);
     } else {
       if (result.error.includes('already registered')) {
         setErrors({ email: result.error });

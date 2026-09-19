@@ -26,7 +26,7 @@ export default function CookieConsent() {
         <div className="flex-1 min-w-0">
           <p className="text-xs text-text-muted dark:text-gray-400 leading-relaxed">
             We use cookies to improve your experience. By using NaukriSetu, you agree to our{' '}
-            <a href="/privacy-policy" className="text-accent hover:underline">Privacy Policy</a>.
+            <a href="/privacy" className="text-accent hover:underline">Privacy Policy</a>.
           </p>
           <div className="flex items-center gap-2 mt-2">
             <button onClick={accept} className="px-3 py-1.5 text-xs font-medium bg-accent text-white rounded-lg hover:bg-accent-dark transition-colors">

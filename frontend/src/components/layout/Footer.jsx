@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Send, Globe, Video, Shield, ExternalLink } from 'lucide-react';
+import { Send, Globe, Video, Shield } from 'lucide-react';
 
 const FOOTER_LINKS = {
   'Quick Links': [

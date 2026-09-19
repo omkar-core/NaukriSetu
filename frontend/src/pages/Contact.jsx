@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, MessageSquare, Phone, ChevronDown } from 'lucide-react';
+import { Mail, MessageSquare, ChevronDown } from 'lucide-react';
 import api from '../services/api.js';
 import { useToast } from '../context/ToastContext.jsx';
 import { useDocumentTitle } from '../hooks/useDocumentTitle.js';
@@ -45,8 +45,7 @@ export default function Contact() {
       addToast('✅ Message sent! We will get back to you within 24 hours.', 'success');
       setForm({ name: '', email: '', subject: 'General Enquiry', message: '', honeypot: '' });
     } catch {
-      addToast('✅ Message received! We will get back to you soon.', 'success');
-      setForm({ name: '', email: '', subject: 'General Enquiry', message: '', honeypot: '' });
+      addToast('❌ Could not send your message right now. Please try again later.', 'error');
     } finally { setLoading(false); }
   };
 

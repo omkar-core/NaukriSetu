@@ -8,14 +8,7 @@ export default function JobCard({ job, className = '' }) {
   const saved = isBookmarked(job.id);
   const daysLeft = getDaysLeft(job.lastDate);
 
-  // Determine tags
-  let tags = job.tags || [];
-  if (!tags.length) {
-    const posted = new Date(job.postingDate);
-    const daysSincePost = (Date.now() - posted) / 86400000;
-    if (daysSincePost <= 3) tags = ['NEW'];
-    else if (daysLeft !== null && daysLeft <= 7 && daysLeft > 0) tags = ['LAST DATE SOON'];
-  }
+  const tags = job.tags || [];
 
   const tagClass = {
     'NEW': 'badge-new',

@@ -1,5 +1,6 @@
 import { writeFileSync, existsSync, readFileSync } from 'fs';
 import { logger } from '../utils/logger.js';
+import { dataPath } from '../utils/paths.js';
 
 function generateId(prefix) {
   return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
@@ -73,10 +74,10 @@ export function seedInitialData() {
   ];
 
   for (const { file, generator } of stores) {
-    const path = `./data/${file}`;
-    if (!existsSync(path) || readFileSync(path, 'utf8').trim() === '[]') {
+    const filePath = dataPath(file);
+    if (!existsSync(filePath) || readFileSync(filePath, 'utf8').trim() === '[]') {
       const data = generator();
-      writeFileSync(path, JSON.stringify(data, null, 2));
+      writeFileSync(filePath, JSON.stringify(data, null, 2));
       logger.cron(`Seeded ${data.length} items to ${file}`);
     }
   }

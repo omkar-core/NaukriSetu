@@ -32,8 +32,10 @@ export async function getLatestJobs(page = 1, limit = 12) {
 
 export async function searchJobs(query, filters = {}) {
   try {
-    const params = new URLSearchParams({ q: query, ...filters }).toString();
-    const res = await api.get(`/jobs/search?${params}`);
+    const params = new URLSearchParams(filters);
+    if (query) params.set('q', query);
+    const qs = params.toString();
+    const res = await api.get(`/jobs/search${qs ? `?${qs}` : ''}`);
     return res.data;
   } catch {
     return { jobs: [], total: 0 };

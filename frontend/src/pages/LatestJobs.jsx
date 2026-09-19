@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { Filter, X, SlidersHorizontal, ArrowUpDown, ChevronDown } from 'lucide-react';
-import { getLatestJobs, searchJobs } from '../services/jobsService.js';
-import { STATES, QUALIFICATIONS, QUICK_FILTERS } from '../utils/constants.js';
+import { Filter, X, SlidersHorizontal } from 'lucide-react';
+import { searchJobs } from '../services/jobsService.js';
+import { STATES, QUALIFICATIONS } from '../utils/constants.js';
 import JobCard from '../components/ui/JobCard.jsx';
 import SkeletonCard from '../components/ui/SkeletonCard.jsx';
 import { useDebounce } from '../hooks/useDebounce.js';
@@ -10,7 +10,13 @@ import { useToast } from '../context/ToastContext.jsx';
 import { useDocumentTitle } from '../hooks/useDocumentTitle.js';
 
 const CATEGORIES_FILTER = ['All', 'Railway', 'Banking', 'Defence', 'Engineering PSU', 'Teaching', 'Police', 'SSC', 'UPSC', 'State PSC'];
-const SORT_OPTIONS = ['Newest First', 'Last Date (Asc)', 'Salary: High to Low', 'Most Viewed'];
+const SORT_OPTIONS = [
+  { label: 'Newest First', value: 'newest' },
+  { label: 'Last Date (Asc)', value: 'lastdate' },
+  { label: 'Salary: High to Low', value: 'salary' },
+  { label: 'Most Viewed', value: 'views' },
+];
+const QUERY_LIMIT = 12;
 
 function ActiveChip({ label, onRemove }) {
   return (
@@ -21,66 +27,8 @@ function ActiveChip({ label, onRemove }) {
   );
 }
 
-export default function LatestJobs() {
-  useDocumentTitle('Latest Government Jobs');
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [jobs, setJobs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [total, setTotal] = useState(0);
-  const [page, setPage] = useState(1);
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [showFilters, setShowFilters] = useState(false);
-  const [sort, setSort] = useState('Newest First');
-  const { addToast } = useToast();
-
-  // Filters
-  const [filters, setFilters] = useState({
-    category: searchParams.get('category') || '',
-    state: searchParams.get('state') || '',
-    qualification: searchParams.get('qualification') || '',
-    q: searchParams.get('q') || '',
-  });
-  const debouncedQ = useDebounce(filters.q, 300);
-
-  useEffect(() => {
-    setLoading(true);
-    const load = async () => {
-      try {
-        const data = debouncedQ
-          ? await searchJobs(debouncedQ, { category: filters.category, state: filters.state })
-          : await getLatestJobs(1, 12);
-        setJobs(data.jobs || []);
-        setTotal(data.total || 0);
-        setPage(1);
-      } catch {
-        setJobs([]);
-        setTotal(0);
-        addToast('Failed to load jobs. Please try again.', 'error');
-      } finally {
-        setLoading(false);
-      }
-    };
-    load();
-  }, [debouncedQ, filters.category, filters.state, filters.qualification]);
-
-  const setFilter = (key, val) => setFilters(prev => ({ ...prev, [key]: val }));
-  const clearFilter = (key) => setFilter(key, '');
-  const clearAll = () => setFilters({ category: '', state: '', qualification: '', q: '' });
-
-  const activeFilters = Object.entries(filters).filter(([k, v]) => v && k !== 'q').map(([k, v]) => ({ key: k, label: `${k}: ${v}` }));
-
-  const loadMore = async () => {
-    setLoadingMore(true);
-    try {
-      const next = page + 1;
-      const data = await getLatestJobs(next, 12);
-      setJobs(prev => [...prev, ...(data.jobs || [])]);
-      setPage(next);
-    } catch { addToast('Could not load more jobs.', 'error'); }
-    finally { setLoadingMore(false); }
-  };
-
-  const FilterPanel = () => (
+function FilterPanel({ filters, setFilter, activeFilters, clearAll }) {
+  return (
     <div className="space-y-5">
       <div>
         <h3 className="font-poppins font-semibold text-sm text-navy dark:text-text-dark mb-3">Category</h3>
@@ -116,6 +64,79 @@ export default function LatestJobs() {
       )}
     </div>
   );
+}
+
+export default function LatestJobs() {
+  useDocumentTitle('Latest Government Jobs');
+  const [searchParams] = useSearchParams();
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+  const [sort, setSort] = useState('newest');
+  const { addToast } = useToast();
+
+  // Filters
+  const [filters, setFilters] = useState({
+    category: searchParams.get('category') || '',
+    state: searchParams.get('state') || '',
+    qualification: searchParams.get('qualification') || '',
+    q: searchParams.get('q') || '',
+  });
+  const debouncedQ = useDebounce(filters.q, 300);
+
+  const buildParams = useCallback((p) => {
+    const params = { sort, page: p, limit: QUERY_LIMIT };
+    if (debouncedQ) params.q = debouncedQ;
+    if (filters.category) params.category = filters.category;
+    if (filters.state) params.state = filters.state;
+    if (filters.qualification) params.qualification = filters.qualification;
+    return params;
+  }, [sort, debouncedQ, filters.category, filters.state, filters.qualification]);
+
+  useEffect(() => {
+    let active = true;
+    searchJobs(debouncedQ, buildParams(1))
+      .then(data => {
+        if (!active) return;
+        setJobs(data.jobs || []);
+        setTotal(data.total || 0);
+        setPage(1);
+      })
+      .catch(() => {
+        if (!active) return;
+        setJobs([]);
+        setTotal(0);
+        addToast('Failed to load jobs. Please try again.', 'error');
+      })
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
+  }, [buildParams, debouncedQ, addToast]);
+
+  const setFilter = (key, val) => {
+    setLoading(true);
+    setFilters(prev => ({ ...prev, [key]: val }));
+  };
+  const clearFilter = (key) => setFilter(key, '');
+  const clearAll = () => {
+    setLoading(true);
+    setFilters({ category: '', state: '', qualification: '', q: '' });
+  };
+
+  const activeFilters = Object.entries(filters).filter(([k, v]) => v && k !== 'q').map(([k, v]) => ({ key: k, label: `${k}: ${v}` }));
+
+  const loadMore = async () => {
+    setLoadingMore(true);
+    try {
+      const next = page + 1;
+      const data = await searchJobs(debouncedQ, buildParams(next));
+      setJobs(prev => [...prev, ...(data.jobs || [])]);
+      setPage(next);
+    } catch { addToast('Could not load more jobs.', 'error'); }
+    finally { setLoadingMore(false); }
+  };
 
   return (
     <main id="main-content" className="pt-16 min-h-screen bg-bg-light dark:bg-bg-dark">
@@ -140,8 +161,8 @@ export default function LatestJobs() {
               maxLength={100}
               aria-label="Search jobs"
             />
-            <select value={sort} onChange={e => setSort(e.target.value)} className="input w-full sm:w-48 text-sm py-2.5">
-              {SORT_OPTIONS.map(o => <option key={o}>{o}</option>)}
+            <select value={sort} onChange={e => setSort(e.target.value)} className="input w-full sm:w-56 text-sm py-2.5" aria-label="Sort jobs">
+              {SORT_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
             </select>
           </div>
 
@@ -164,7 +185,7 @@ export default function LatestJobs() {
               <h2 className="font-poppins font-semibold text-base text-navy dark:text-text-dark mb-4 flex items-center gap-2">
                 <SlidersHorizontal size={16} className="text-accent" /> Filters
               </h2>
-              <FilterPanel />
+              <FilterPanel filters={filters} setFilter={setFilter} activeFilters={activeFilters} clearAll={clearAll} />
             </div>
           </aside>
 
@@ -184,7 +205,7 @@ export default function LatestJobs() {
                   <span className="font-semibold text-navy dark:text-text-dark">Filters</span>
                   <button onClick={() => setShowFilters(false)} className="btn-ghost p-1" aria-label="Close filter"><X size={16} /></button>
                 </div>
-                <FilterPanel />
+                <FilterPanel filters={filters} setFilter={setFilter} activeFilters={activeFilters} clearAll={clearAll} />
               </div>
             )}
 

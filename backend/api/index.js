@@ -36,7 +36,7 @@ app.use(helmet({
 }));
 
 app.use(cors({
-  origin: [ALLOWED_ORIGIN, 'http://localhost:5173', 'http://localhost:3000', 'https://naukrisetu.vercel.app', /.+-naukrisetu\.vercel\.app$/],
+  origin: [ALLOWED_ORIGIN, 'http://localhost:5173', 'http://localhost:3000', 'https://naukrisetu.in', 'https://www.naukrisetu.in', 'https://naukrisetu.vercel.app', /.+-naukrisetu\.vercel\.app$/],
   methods: ['GET', 'POST', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: false,

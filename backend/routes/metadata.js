@@ -1,7 +1,7 @@
 import express from 'express';
 import { rateLimit } from 'express-rate-limit';
-import { z } from 'zod';
 import { getCache, setCache } from '../utils/cache.js';
+import { dataPath } from '../utils/paths.js';
 
 const router = express.Router();
 const limiter = rateLimit({ windowMs: 60000, max: 120, standardHeaders: true, legacyHeaders: false });
@@ -9,9 +9,21 @@ const limiter = rateLimit({ windowMs: 60000, max: 120, standardHeaders: true, le
 async function readJsonStore(filename) {
   try {
     const { readFileSync } = await import('fs');
-    return JSON.parse(readFileSync(`./data/${filename}.json`, 'utf8'));
+    return JSON.parse(readFileSync(dataPath(`${filename}.json`), 'utf8'));
   } catch { return []; }
 }
+
+// Map backend job.category values to the frontend category ids used by Home "Browse by Category"
+const CATEGORY_ID_MAP = {
+  Railway: 'railway',
+  Banking: 'banking',
+  Defence: 'defence',
+  'Engineering PSU': 'psu',
+  Teaching: 'teaching',
+  Police: 'police',
+  Internship: 'internships',
+  Apprenticeship: 'apprenticeship',
+};
 
 // GET /api/metadata
 router.get('/', limiter, async (req, res, next) => {
@@ -43,6 +55,22 @@ router.get('/', limiter, async (req, res, next) => {
       const items = await readJsonStore(file);
       data[key] = items.length;
     }
+    const jobs = await readJsonStore('jobs');
+    const categoryCounts = {
+      railway: 0,
+      banking: 0,
+      defence: 0,
+      psu: 0,
+      teaching: 0,
+      police: 0,
+      internships: 0,
+      apprenticeship: 0,
+    };
+    for (const job of jobs) {
+      const id = CATEGORY_ID_MAP[job.category];
+      if (id) categoryCounts[id] += 1;
+    }
+    data.categoryCounts = categoryCounts;
     setCache('metadata', data, 5 * 60 * 1000);
     res.json(data);
   } catch (err) { next(err); }

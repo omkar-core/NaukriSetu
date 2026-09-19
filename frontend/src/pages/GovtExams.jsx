@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getLatestExams } from '../services/examsService.js';
 import { Link } from 'react-router-dom';
-import { ExternalLink } from 'lucide-react';
 import { formatDate } from '../utils/formatDate.js';
 import { useDocumentTitle } from '../hooks/useDocumentTitle.js';
 

@@ -103,7 +103,7 @@ export default function Home() {
     getLiveNews('All').then(data => {
       setNewsCards(data.cards || []);
     }).catch(() => {}).finally(() => setNewsLoading(false));
-  }, []);
+  }, [addToast]);
 
   useEffect(() => {
     const fetchSections = async () => {
@@ -133,7 +133,7 @@ export default function Home() {
   useEffect(() => {
     if (!debouncedSearch) return;
     navigate(`/jobs?q=${encodeURIComponent(debouncedSearch)}`);
-  }, [debouncedSearch]);
+  }, [debouncedSearch, navigate]);
 
   const loadMore = async () => {
     setLoadingMore(true);
@@ -158,8 +158,7 @@ export default function Home() {
       addToast('🎉 Subscribed! You will receive job alerts soon.', 'success');
       setEmail('');
     } catch {
-      addToast('Subscription saved! We will notify you soon.', 'success');
-      setEmail('');
+      addToast('❌ Could not subscribe right now. Please try again later.', 'error');
     } finally {
       setSubLoading(false);
     }

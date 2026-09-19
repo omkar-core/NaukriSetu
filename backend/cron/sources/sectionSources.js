@@ -7,7 +7,9 @@ function generateId(text) {
     hash = ((hash << 5) - hash) + char;
     hash = hash & hash;
   }
-  return `sec_${Math.abs(hash).toString(16).slice(0, 14)}`;
+  const stamp = Date.now().toString(36).slice(-6);
+  const rand = Math.random().toString(36).slice(2, 6);
+  return `sec_${Math.abs(hash).toString(16).slice(0, 8)}${stamp}${rand}`;
 }
 
 function isExamRelated(headline, summary) {

@@ -1,0 +1,68 @@
+[
+  {
+    "id": "app_mpa0o0jy_dbihdu",
+    "type": "Railway",
+    "vacancies": 2500,
+    "title": "Apprentice Training at Indian Railways",
+    "organization": "Indian Railways (RRB)",
+    "trade": "Fitter, Welder, Electrician",
+    "stipend": "₹8,000 - ₹12,000/month",
+    "qualification": "10th/ITI Pass",
+    "officialLink": "https://www.rrb.gov.in"
+  },
+  {
+    "id": "app_mpa0o0jy_p9ky7e",
+    "type": "PSU",
+    "vacancies": 1500,
+    "title": "Trade Apprentice at BHEL",
+    "organization": "Bharat Heavy Electricals Limited",
+    "trade": "Machinist, Turner, Electrician",
+    "stipend": "₹9,000 - ₹14,000/month",
+    "qualification": "ITI in relevant trade",
+    "officialLink": "https://www.bhel.com"
+  },
+  {
+    "id": "app_mpa0o0jy_7notr6",
+    "type": "Skill India",
+    "vacancies": 5000,
+    "title": "Apprenticeship under NAPS",
+    "organization": "National Apprenticeship Promotion Scheme",
+    "trade": "Retail, IT, BFSI, Logistics",
+    "stipend": "₹7,000 - ₹15,000/month",
+    "qualification": "8th/10th/12th Pass",
+    "officialLink": "https://www.apprenticeshipindia.gov.in"
+  },
+  {
+    "id": "app_mpa0o0jy_fjagij",
+    "type": "Government Factory",
+    "vacancies": 800,
+    "title": "Apprentice at Ordnance Factory Board",
+    "organization": "Ordnance Factory Board, Ministry of Defence",
+    "trade": "Fitter, Machinist, Electrician, Carpenter",
+    "stipend": "₹8,000 - ₹11,000/month",
+    "qualification": "ITI/Diploma in relevant trade",
+    "officialLink": "https://ofb.gov.in"
+  },
+  {
+    "id": "app_mpa0o0jy_2v0btw",
+    "type": "PSU",
+    "vacancies": 1200,
+    "title": "Graduate Apprentice at GAIL",
+    "organization": "GAIL (India) Limited",
+    "trade": "Engineering (Mechanical, Electrical, Civil)",
+    "stipend": "₹15,000 - ₹20,000/month",
+    "qualification": "B.Tech/BE in relevant branch",
+    "officialLink": "https://www.gailonline.com"
+  },
+  {
+    "id": "app_mpa0o0jy_eblswe",
+    "type": "Railway",
+    "vacancies": 3500,
+    "title": "Act Apprentice at South Eastern Railway",
+    "organization": "South Eastern Railway (Ministry of Railways)",
+    "trade": "Fitter, Electrician, Welder, Machinist",
+    "stipend": "₹7,000 - ₹12,000/month",
+    "qualification": "10th + ITI in relevant trade",
+    "officialLink": "https://www.ser.indianrailways.gov.in"
+  }
+]

@@ -1,4 +1,4 @@
-export default function SkeletonCard({ count = 1, type = 'job' }) {
+export default function SkeletonCard({ count = 1 }) {
   return (
     <>
       {Array.from({ length: count }).map((_, i) => (

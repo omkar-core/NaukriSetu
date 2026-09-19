@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Bookmark, Bell, Settings, LogOut, ExternalLink, Calendar, MapPin, GraduationCap, BriefcaseBusiness } from 'lucide-react';
+import { Bookmark, Bell, Settings, LogOut, ExternalLink, BriefcaseBusiness } from 'lucide-react';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useDocumentTitle } from '../hooks/useDocumentTitle.js';
 import { signOut } from '../services/authService.js';

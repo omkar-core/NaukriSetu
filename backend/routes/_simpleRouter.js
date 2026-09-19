@@ -2,13 +2,14 @@
 import express from 'express';
 import { rateLimit } from 'express-rate-limit';
 import { getCache, setCache } from '../utils/cache.js';
+import { dataPath } from '../utils/paths.js';
 
 const limiter = rateLimit({ windowMs: 60000, max: 60, standardHeaders: true, legacyHeaders: false });
 
 async function readJsonStore(filename) {
   try {
     const { readFileSync } = await import('fs');
-    return JSON.parse(readFileSync(`./data/${filename}.json`, 'utf8'));
+    return JSON.parse(readFileSync(dataPath(`${filename}.json`), 'utf8'));
   } catch { return []; }
 }
 
